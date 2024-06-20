@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduling Algorithms</title>
+</head>
+<body>
+    <h1>CPU Scheduling Algorithms</h1>
+    <form id="schedulingForm" method="post">
+        <label for="numProcesses">Number of Processes:</label>
+        <input type="number" id="numProcesses" name="numProcesses" required><br><br>
+        
+        <label for="algorithm">Choose an Algorithm:</label>
+        <select id="algorithm" name="algorithm" required>
+            <option value="1">FCFS</option>
+            <option value="2">Non-Preemptive SJF</option>
+            <option value="3">Preemptive SJF</option>
+            <option value="4">Non-Preemptive Priority</option>
+            <option value="5">Preemptive Priority</option>
+            <option value="6">Round Robin</option>
+            <option value="7">Compare All</option>
+        </select><br><br>
+        
+        <div id="processDetails"></div>
+        
+        <label for="timeQuantum" id="timeQuantumLabel" style="display:none;">Time Quantum (for Round Robin):</label>
+        <input type="number" id="timeQuantum" name="timeQuantum" style="display:none;"><br><br>
+        
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('numProcesses').addEventListener('change', function() {
+            const numProcesses = this.value;
+            let processDetails = document.getElementById('processDetails');
+            processDetails.innerHTML = '';
+            
+            for (let i = 0; i < numProcesses; i++) {
+                processDetails.innerHTML += `
+                    <h3>Process ${i + 1}</h3>
+                    <label for="arrivalTime${i}">Arrival Time:</label>
+                    <input type="number" id="arrivalTime${i}" name="arrivalTime${i}" required><br>
+                    <label for="burstTime${i}">Burst Time:</label>
+                    <input type="number" id="burstTime${i}" name="burstTime${i}" required><br>
+                    <label for="priority${i}" class="priorityField" style="display:none;">Priority:</label>
+                    <input type="number" id="priority${i}" name="priority${i}" class="priorityField" style="display:none;"><br><br>
+                `;
+            }
+        });
+
+        document.getElementById('algorithm').addEventListener('change', function() {
+            const algorithm = this.value;
+            const priorityFields = document.querySelectorAll('.priorityField');
+            const timeQuantumLabel = document.getElementById('timeQuantumLabel');
+            const timeQuantumInput = document.getElementById('timeQuantum');
+            
+            if (algorithm == 4 || algorithm == 5 || algorithm == 7) {
+                priorityFields.forEach(field => field.style.display = 'inline');
+            } else {
+                priorityFields.forEach(field => field.style.display = 'none');
+            }
+
+            if (algorithm == 6 || algorithm == 7) {
+                timeQuantumLabel.style.display = 'inline';
+                timeQuantumInput.style.display = 'inline';
+            } else {
+                timeQuantumLabel.style.display = 'none';
+                timeQuantumInput.style.display = 'none';
+            }
+        });
+
+        function submitForm() {
+            const formData = new FormData(document.getElementById('schedulingForm'));
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "php/process.php", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('result').innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send(formData);
+        }
+    </script>
+</body>
+</html>

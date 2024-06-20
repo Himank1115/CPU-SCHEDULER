@@ -1,0 +1,10 @@
+
+Gantt Chart:
+1 P1 2 P2 
+
+Process:P1  Finish Time: 2  Response Time: 0  Waiting Time: 0  Turnaround Time: 1
+Process:P2  Finish Time: 4  Response Time: 0  Waiting Time: 0  Turnaround Time: 2
+
+Average waiting time: 0
+Average Turnaround time: 1.5
+Idle Time: 1
