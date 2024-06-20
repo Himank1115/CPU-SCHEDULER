@@ -1,0 +1,21 @@
+# Requirements for CPU Scheduler Algorithm Project
+
+# Web Server with PHP support
+# You can use Apache or Nginx with PHP. Here are the versions to install:
+# For Apache:
+# sudo apt-get install apache2
+# sudo apt-get install php libapache2-mod-php
+
+# For Nginx:
+# sudo apt-get install nginx
+# sudo apt-get install php-fpm
+
+# PHP version
+PHP>=7.4
+
+# C++ Compiler
+# Ensure you have a C++ compiler installed (e.g., g++)
+# For Ubuntu:
+# sudo apt-get install g++
+
+# For other systems, use the appropriate package manager to install g++ or another C++ compiler.
